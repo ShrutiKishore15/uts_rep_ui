@@ -20,7 +20,7 @@ class DailyReportBloc extends Bloc<DailyReportEvent, DailyReportState> {
     ReportName(reportName: "TTE Money Receipts", reportId: "acds_can"),
     ReportName(reportName: "TC Money Receipts", reportId: "acds_can"),
     ReportName(reportName: "Misc Receipt Tickets", reportId: "acds_can"),
-    ReportName(reportName: "M9 Classification Tickets", reportId: "dpmM9Psgn"),
+    ReportName(reportName: "M9 Classification Tickets", reportId: "dpmM9psgn"),
     ReportName(
         reportName: "Sum of Trans(Cash Information)", reportId: "acds_can"),
     ReportName(
@@ -28,15 +28,15 @@ class DailyReportBloc extends Bloc<DailyReportEvent, DailyReportState> {
         reportId: "acds_can"),
     ReportName(
         reportName: "Journey and Season Station Pair", reportId: "dpmStnPair"),
-    ReportName(reportName: "All Vouchers", reportId: "dpmAllVch"),
-    ReportName(reportName: "Blank Papaer Tickets(BPT)", reportId: "acds_can"),
+    ReportName(reportName: "All Vouchers", reportId: "dpmAllvch"),
+    ReportName(reportName: "Blank Paper Tickets(BPT)", reportId: "acds_can"),
     ReportName(reportName: "Supervisor Intervention", reportId: "acds_can"),
     ReportName(reportName: "Bank Card Transaction", reportId: "acds_can"),
     ReportName(reportName: "UPI Transaction", reportId: "acds_can"),
     ReportName(reportName: "Surcharge", reportId: "acds_can"),
     ReportName(
         reportName: "All Concessions(Journey plus Season)",
-        reportId: "dpmAllConc"),
+        reportId: "dpmAllconc"),
     ReportName(
         reportName: "PCDO/MCDO Daily(UTS,ATVM,Mobile)", reportId: "acds_can"),
     ReportName(

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:scrollable_table_view/scrollable_table_view.dart';
 import 'package:string_validator/string_validator.dart';
@@ -169,7 +170,7 @@ class _DailyReportDetailPageState extends State<DailyReportDetailPage> {
                             ButtonSegment<String>(
                                 value: sections[i].sectionName,
                                 label: Text(
-                                  sections[i].sectionName,
+                                  sections[i].sectionName,style: TextStyle(fontSize: 12,fontWeight: FontWeight.w400),
                                 )),
                         ],
                         selected: {bloc.currentReportSectionName},
@@ -197,7 +198,7 @@ class _DailyReportDetailPageState extends State<DailyReportDetailPage> {
                           ? _buildNewTable(context)
                           : (state is DailyReportDetailSectionLoading)
                               ? const CircularProgressIndicator()
-                              : const Text("Please select a report section"))
+                              : const Text("Please select a report section",style: TextStyle(fontSize: 16,color: Colors.red),))
                 ],
               );
             } else {
@@ -219,7 +220,7 @@ class _DailyReportDetailPageState extends State<DailyReportDetailPage> {
       currentSection = bloc.currentReportSection!;
     }
 
-    List<Figure> figures = currentSection.figures;
+    List figures = currentSection.figures;
     List<ColumnInfo> columns = currentSection.columnInfo;
 
     // Set<DataColumn> dataColumns = {};
@@ -245,10 +246,10 @@ class _DailyReportDetailPageState extends State<DailyReportDetailPage> {
     // }
 
     return SizedBox(
-      width: double.maxFinite,
+      // width: double.maxFinite,
       height: 500,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.fromLTRB(30.0,10,30,0),
         child: ScrollableTableView(
           headers: columns.map((column) {
             return TableViewHeader(
@@ -257,9 +258,11 @@ class _DailyReportDetailPageState extends State<DailyReportDetailPage> {
             );
           }).toList(),
           rows: figures.map((row) {
+            debugPrint("% - ${row.toString()}");
             return TableViewRow(
               height: 30,
               cells: columns.map((column) {
+                debugPrint("# - ${column.toString()}");
                 dynamic cellContent = row.toMap().entries.firstWhere((element) => element.key == column.columnName).value.toString();
                 bool isCellContentNumeric = isNumeric(cellContent);
                 debugPrint(cellContent.toString());
@@ -285,7 +288,7 @@ class _DailyReportDetailPageState extends State<DailyReportDetailPage> {
       currentSection = bloc.currentReportSection!;
     }
 
-    List<Figure> figures = currentSection.figures;
+    List<dynamic> figures = currentSection.figures;
     List<ColumnInfo> columns = currentSection.columnInfo;
 
     Set<DataColumn> dataColumns = {};
