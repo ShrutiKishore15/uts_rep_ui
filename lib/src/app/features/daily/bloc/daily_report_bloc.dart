@@ -14,21 +14,22 @@ part 'daily_report_state.dart';
 
 class DailyReportBloc extends Bloc<DailyReportEvent, DailyReportState> {
   final List<ReportName> reportsList = [
-    ReportName(reportName: "Cancelled Tickets", reportId: "acds_can"),
-    ReportName(reportName: "Special Cancelled Tickets", reportId: "acds_can"),
+    ReportName(reportName: "Cancelled Tickets", reportId: "dpmCanceltkt"),
+    ReportName(
+        reportName: "Special Cancelled Tickets", reportId: "dpmSplcanceltkt"),
     ReportName(reportName: "Non-Issue Tickets", reportId: "acds_can"),
     ReportName(reportName: "TTE Money Receipts", reportId: "acds_can"),
     ReportName(reportName: "TC Money Receipts", reportId: "acds_can"),
     ReportName(reportName: "Misc Receipt Tickets", reportId: "acds_can"),
-    ReportName(reportName: "M9 Classification Tickets", reportId: "dpmM9Psgn"),
+    ReportName(reportName: "M9 Classification Tickets", reportId: "dpmM9psgn"),
     ReportName(
         reportName: "Sum of Trans(Cash Information)", reportId: "acds_can"),
     ReportName(
         reportName: "M17 Continuity and Ticket Information",
         reportId: "acds_can"),
     ReportName(
-        reportName: "Journey and Season Station Pair", reportId: "dpmStnPair"),
-    ReportName(reportName: "All Vouchers", reportId: "dpmAllVch"),
+        reportName: "Journey and Season Station Pair", reportId: "dpmStnpair"),
+    ReportName(reportName: "All Vouchers", reportId: "dpmAllvch"),
     ReportName(reportName: "Blank Papaer Tickets(BPT)", reportId: "acds_can"),
     ReportName(reportName: "Supervisor Intervention", reportId: "acds_can"),
     ReportName(reportName: "Bank Card Transaction", reportId: "acds_can"),
@@ -36,7 +37,7 @@ class DailyReportBloc extends Bloc<DailyReportEvent, DailyReportState> {
     ReportName(reportName: "Surcharge", reportId: "acds_can"),
     ReportName(
         reportName: "All Concessions(Journey plus Season)",
-        reportId: "dpmAllConc"),
+        reportId: "dpmAllconc"),
     ReportName(
         reportName: "PCDO/MCDO Daily(UTS,ATVM,Mobile)", reportId: "acds_can"),
     ReportName(

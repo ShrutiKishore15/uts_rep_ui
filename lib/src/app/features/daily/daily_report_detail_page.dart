@@ -3,7 +3,9 @@ import 'package:scrollable_table_view/scrollable_table_view.dart';
 import 'package:string_validator/string_validator.dart';
 
 import 'package:uts_rep_ui/src/app/features/daily/bloc/daily_report_detail_bloc.dart';
-import 'package:uts_rep_ui/src/app/features/daily/models/acds_m9psgn.dart';
+//import 'package:uts_rep_ui/src/app/features/daily/models/acds_m9psgn.dart';
+import 'package:uts_rep_ui/src/app/features/daily/models/acds_canceltkt.dart';
+
 import 'package:uts_rep_ui/src/app/features/daily/models/report_section_name_model.dart';
 import 'package:uts_rep_ui/src/app/model/daily_report_request.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -246,7 +248,7 @@ class _DailyReportDetailPageState extends State<DailyReportDetailPage> {
 
     return SizedBox(
       width: double.maxFinite,
-      height: 500,
+      height: 350,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ScrollableTableView(
@@ -260,14 +262,21 @@ class _DailyReportDetailPageState extends State<DailyReportDetailPage> {
             return TableViewRow(
               height: 30,
               cells: columns.map((column) {
-                dynamic cellContent = row.toMap().entries.firstWhere((element) => element.key == column.columnName).value.toString();
+                dynamic cellContent = row
+                    .toMap()
+                    .entries
+                    .firstWhere((element) => element.key == column.columnName)
+                    .value
+                    .toString();
                 bool isCellContentNumeric = isNumeric(cellContent);
                 debugPrint(cellContent.toString());
                 debugPrint(isCellContentNumeric.toString());
                 return TableViewCell(
-
-                  alignment: isCellContentNumeric ? Alignment.centerRight : Alignment.centerLeft,
-                  child: Text(cellContent,style: const TextStyle(fontSize: 14)),
+                  alignment: isCellContentNumeric
+                      ? Alignment.centerRight
+                      : Alignment.centerLeft,
+                  child:
+                      Text(cellContent, style: const TextStyle(fontSize: 14)),
                 );
               }).toList(),
             );
