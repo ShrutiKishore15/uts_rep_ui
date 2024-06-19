@@ -2,11 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:uts_rep_ui/src/app/config/app_routes.dart';
-import 'package:uts_rep_ui/src/app/features/daily/daily_report_detail_page.dart';
-import 'package:uts_rep_ui/src/app/features/daily/models/acds_m9psgn.dart';
 import 'package:uts_rep_ui/src/app/features/daily/models/report_name_model.dart';
 import 'package:uts_rep_ui/src/app/model/daily_report_request.dart';
-import 'package:uts_rep_ui/src/app/model/daily_report_response.dart';
 import 'package:go_router/go_router.dart';
 
 part 'daily_report_event.dart';

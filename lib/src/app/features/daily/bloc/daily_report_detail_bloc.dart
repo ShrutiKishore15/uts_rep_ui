@@ -1,8 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/material.dart';
-import 'package:uts_rep_ui/src/app/features/daily/models/acds_m9psgn.dart';
 import 'package:uts_rep_ui/src/app/features/daily/models/acds_report.dart';
 import 'package:uts_rep_ui/src/app/features/daily/models/acds_report_data.dart';
 import 'package:uts_rep_ui/src/app/model/daily_report_request.dart';
@@ -71,11 +71,15 @@ class DailyReportDetailBloc
       //debugPrint(event.toString());
       DailyReportResponse res = DailyReportResponse.fromJson(event);
       if (res.requestId == req.requestId) {
-  AcdsReport report = AcdsReport.fromJson(res.report);
-//        AcdsCancelReport report = AcdsCancelReport.fromJson(res.report);
-
-        this.report = report;
-        add(DailyReportDetailLoadedEvent());
+        try {
+          AcdsReport report = AcdsReport.fromJson(res.report);
+          debugPrint("####");
+          debugPrint(report.locationCode);
+          this.report = report;
+          add(DailyReportDetailLoadedEvent()); 
+        } catch (e) {
+          debugPrint(e.toString());
+        }
       }
     });
   }

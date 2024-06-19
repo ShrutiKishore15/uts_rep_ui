@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:scrollable_table_view/scrollable_table_view.dart';
+import 'package:string_validator/string_validator.dart';
 
 import 'package:uts_rep_ui/src/app/features/daily/bloc/daily_report_detail_bloc.dart';
-import 'package:uts_rep_ui/src/app/features/daily/models/acds_column_info.dart';
 import 'package:uts_rep_ui/src/app/features/daily/models/acds_report_data.dart';
 
 import 'package:uts_rep_ui/src/app/features/daily/models/report_section_name_model.dart';
@@ -223,61 +223,36 @@ class _DailyReportDetailPageState extends State<DailyReportDetailPage> {
     List<Map<String, dynamic>>? figures = currentSection.figures;
     List<Map<String, dynamic>>? columns = currentSection.columnInfo;
 
-    // Set<DataColumn> dataColumns = {};
-    // List<DataRow> dataRows = List.empty(growable: true);
-
-    // for (int i = 0; i < currentSection.columnInfo.length; i++) {
-    //   dataColumns.add(DataColumn(
-    //       label: Text(currentSection.columnInfo[i].columnName,
-    //           style: const TextStyle(fontWeight: FontWeight.bold))));
-    // }
-
-    // for (int i = 0; i < figures.length; i++) {
-    //   Map<String, dynamic> figure = figures[i].toMap();
-    //   List<DataCell> cells = List.empty(growable: true);
-    //   for (int j = 0; j < columns.length; j++) {
-    //     String k = figure.keys
-    //         .firstWhere((element) => element == columns[j].columnName);
-    //     figure.forEach((key, value) {
-    //       if (key == k) cells.add(DataCell(Text("$value")));
-    //     });
-    //   }
-    //   dataRows.add(DataRow(cells: cells));
-    // }
-
     return SizedBox(
       width: double.maxFinite,
       height: 350,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(30.0,10,30,0),
         child: ScrollableTableView(
-          headers: columns!.map((column) {
+          headers: columns.map((column) {
             return TableViewHeader(
               alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.all(5),
+              // width: figures.,
               label: column['columnName'],
             );
           }).toList(),
-          rows: figures!.map((row) {
-            debugPrint("% - ${row.toString()}");
+          rows: figures.map((row) {
+            //debugPrint("% - ${row.toString()}");
             return TableViewRow(
-              height: 30,
               cells: columns.map((column) {
-                // dynamic cellContent = row
-                //     .toMap()
-                //     .entries
-                //     .firstWhere((element) => element.key == column.columnName)
-                //     .value
-                //     .toString();
-                // bool isCellContentNumeric = isNumeric(cellContent);
+                dynamic cellContent = row
+                    .entries
+                    .firstWhere((element) => element.key == column['columnName'])
+                    .value
+                    .toString();
+                bool isCellContentNumeric = isNumeric(cellContent);
                 // debugPrint(cellContent.toString());
                 // debugPrint(isCellContentNumeric.toString());
                 return TableViewCell(
-                  // alignment: isCellContentNumeric
-                  //     ? Alignment.centerRight
-                  //     : Alignment.centerLeft,
-                  child:
-                      //Text(cellContent, style: const TextStyle(fontSize: 14)),
-                      const Text("AA", style: const TextStyle(fontSize: 14)),
+                  alignment: isCellContentNumeric ? Alignment.centerRight: Alignment.centerLeft,
+                  padding: isCellContentNumeric ? const EdgeInsets.fromLTRB(0, 0, 15, 0): const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                  child: Text(cellContent, style: const TextStyle(fontSize: 14)),
                 );
               }).toList(),
             );
