@@ -14,8 +14,9 @@ part 'daily_report_state.dart';
 
 class DailyReportBloc extends Bloc<DailyReportEvent, DailyReportState> {
   final List<ReportName> reportsList = [
-    ReportName(reportName: "Cancelled Tickets", reportId: "acds_can"),
-    ReportName(reportName: "Special Cancelled Tickets", reportId: "acds_can"),
+    ReportName(reportName: "Cancelled Tickets", reportId: "dpmCanceltkt"),
+    ReportName(
+        reportName: "Special Cancelled Tickets", reportId: "dpmSplcanceltkt"),
     ReportName(reportName: "Non-Issue Tickets", reportId: "acds_can"),
     ReportName(reportName: "TTE Money Receipts", reportId: "acds_can"),
     ReportName(reportName: "TC Money Receipts", reportId: "acds_can"),
@@ -27,9 +28,9 @@ class DailyReportBloc extends Bloc<DailyReportEvent, DailyReportState> {
         reportName: "M17 Continuity and Ticket Information",
         reportId: "acds_can"),
     ReportName(
-        reportName: "Journey and Season Station Pair", reportId: "dpmStnPair"),
+        reportName: "Journey and Season Station Pair", reportId: "dpmStnpair"),
     ReportName(reportName: "All Vouchers", reportId: "dpmAllvch"),
-    ReportName(reportName: "Blank Paper Tickets(BPT)", reportId: "acds_can"),
+    ReportName(reportName: "Blank Papaer Tickets(BPT)", reportId: "acds_can"),
     ReportName(reportName: "Supervisor Intervention", reportId: "acds_can"),
     ReportName(reportName: "Bank Card Transaction", reportId: "acds_can"),
     ReportName(reportName: "UPI Transaction", reportId: "acds_can"),

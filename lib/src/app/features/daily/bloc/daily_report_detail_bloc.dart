@@ -1,9 +1,10 @@
 import 'dart:async';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 import 'package:uts_rep_ui/src/app/features/daily/models/acds_m9psgn.dart';
+import 'package:uts_rep_ui/src/app/features/daily/models/acds_report.dart';
+import 'package:uts_rep_ui/src/app/features/daily/models/acds_report_data.dart';
 import 'package:uts_rep_ui/src/app/model/daily_report_request.dart';
 import 'package:uts_rep_ui/src/app/model/daily_report_response.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -18,9 +19,10 @@ class DailyReportDetailBloc
     Uri.parse('ws://localhost:8080/daily'),
   );
 
-  late AcdsM9psgnReport report;
+  late AcdsReport report;
+  //late AcdsCancelReport report;
   String currentReportSectionName = "";
-  ReportDatum? currentReportSection;
+  AcdsReportData? currentReportSection;
 
   DailyReportDetailBloc() : super(DailyReportDetailInitial()) {
     // on<DailyReportDetailEvent>((event, emit) {
@@ -42,13 +44,14 @@ class DailyReportDetailBloc
       emit(DailyReportDetailSectionLoading());
       debugPrint("DailyReportDetailSectionChangeEvent");
       debugPrint(currentReportSectionName);
-      currentReportSection = report.reportData.firstWhere((element) => element.section == currentReportSectionName);
+      currentReportSection = report.reportData
+          ?.firstWhere((element) => element.section == currentReportSectionName);
       emit(DailyReportDetailSectionLoaded());
     });
-
   }
 
-  fetchReport(Emitter<DailyReportDetailState> emit, DailyReportRequest req) async {
+  fetchReport(
+      Emitter<DailyReportDetailState> emit, DailyReportRequest req) async {
     emit(DailyReportDetailFetching());
     _channel.sink.add(req.toJson());
 
@@ -63,18 +66,18 @@ class DailyReportDetailBloc
       },
     );
 
-    subscription.onData(
-      (event) {
-        debugPrint("*** Message Received ***");
-        //debugPrint(event.toString());
-        DailyReportResponse res = DailyReportResponse.fromJson(event);
-        if (res.requestId == req.requestId) {
-          AcdsM9psgnReport report = AcdsM9psgnReport.fromJson(res.report);
-          this.report = report;
-          add(DailyReportDetailLoadedEvent());
-        }
+    subscription.onData((event) {
+      debugPrint("*** Message Received ***");
+      //debugPrint(event.toString());
+      DailyReportResponse res = DailyReportResponse.fromJson(event);
+      if (res.requestId == req.requestId) {
+  AcdsReport report = AcdsReport.fromJson(res.report);
+//        AcdsCancelReport report = AcdsCancelReport.fromJson(res.report);
+
+        this.report = report;
+        add(DailyReportDetailLoadedEvent());
       }
-    );
+    });
   }
 
   void dispose() {

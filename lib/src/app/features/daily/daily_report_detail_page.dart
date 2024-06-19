@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:scrollable_table_view/scrollable_table_view.dart';
-import 'package:string_validator/string_validator.dart';
 
 import 'package:uts_rep_ui/src/app/features/daily/bloc/daily_report_detail_bloc.dart';
-import 'package:uts_rep_ui/src/app/features/daily/models/acds_m9psgn.dart';
+import 'package:uts_rep_ui/src/app/features/daily/models/acds_column_info.dart';
+import 'package:uts_rep_ui/src/app/features/daily/models/acds_report_data.dart';
+
 import 'package:uts_rep_ui/src/app/features/daily/models/report_section_name_model.dart';
-import 'package:uts_rep_ui/src/app/model/daily_report_request.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DailyReportDetailPage extends StatefulWidget {
@@ -55,10 +55,10 @@ class _DailyReportDetailPageState extends State<DailyReportDetailPage> {
               debugPrint("*** Sections ***");
               debugPrint(state.toString());
               List<ReportSectionName> sections = List.empty(growable: true);
-              for (int i = 0; i < bloc.report.reportData.length; i++) {
+              for (int i = 0; i < bloc.report.reportData!.length; i++) {
                 ReportSectionName t = ReportSectionName(
-                    sectionName: bloc.report.reportData[i].section,
-                    order: bloc.report.reportData[i].order.toString());
+                    sectionName: bloc.report.reportData![i].section!,
+                    order: bloc.report.reportData![i].order.toString());
                 sections.add(t);
               }
 
@@ -75,7 +75,7 @@ class _DailyReportDetailPageState extends State<DailyReportDetailPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  bloc.report.system,
+                                  bloc.report.system!,
                                   style: const TextStyle(
                                       fontSize: 22,
                                       fontWeight: FontWeight.w600),
@@ -89,13 +89,13 @@ class _DailyReportDetailPageState extends State<DailyReportDetailPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  bloc.report.reportName,
+                                  bloc.report.reportName!,
                                   style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w300),
                                 ),
                                 Text(
-                                  bloc.report.reportType,
+                                  bloc.report.reportType!,
                                   style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold),
@@ -118,11 +118,11 @@ class _DailyReportDetailPageState extends State<DailyReportDetailPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(bloc.report.zone,
+                                Text(bloc.report.zone!,
                                     style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold)),
-                                Text(bloc.report.date,
+                                Text(bloc.report.date!,
                                     style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold)),
@@ -144,11 +144,11 @@ class _DailyReportDetailPageState extends State<DailyReportDetailPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(bloc.report.locationCode,
+                                Text(bloc.report.locationCode!,
                                     style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold)),
-                                Text(bloc.report.dateOfRun,
+                                Text(bloc.report.dateOfRun!,
                                     style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold)),
@@ -214,14 +214,14 @@ class _DailyReportDetailPageState extends State<DailyReportDetailPage> {
 
   Widget _buildNewTable(BuildContext context) {
     final bloc = BlocProvider.of<DailyReportDetailBloc>(context);
-    late ReportDatum currentSection;
+    late AcdsReportData currentSection;
 
     if (bloc.currentReportSection != null) {
       currentSection = bloc.currentReportSection!;
     }
 
-    List figures = currentSection.figures;
-    List<ColumnInfo> columns = currentSection.columnInfo;
+    List<Map<String, dynamic>>? figures = currentSection.figures;
+    List<Map<String, dynamic>>? columns = currentSection.columnInfo;
 
     // Set<DataColumn> dataColumns = {};
     // List<DataRow> dataRows = List.empty(growable: true);
@@ -246,82 +246,43 @@ class _DailyReportDetailPageState extends State<DailyReportDetailPage> {
     // }
 
     return SizedBox(
-      // width: double.maxFinite,
-      height: 500,
+      width: double.maxFinite,
+      height: 350,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(30.0,10,30,0),
         child: ScrollableTableView(
-          headers: columns.map((column) {
+          headers: columns!.map((column) {
             return TableViewHeader(
               alignment: Alignment.centerLeft,
-              label: column.columnName,
+              label: column['columnName'],
             );
           }).toList(),
-          rows: figures.map((row) {
+          rows: figures!.map((row) {
             debugPrint("% - ${row.toString()}");
             return TableViewRow(
               height: 30,
               cells: columns.map((column) {
-                debugPrint("# - ${column.toString()}");
-                dynamic cellContent = row.toMap().entries.firstWhere((element) => element.key == column.columnName).value.toString();
-                bool isCellContentNumeric = isNumeric(cellContent);
-                debugPrint(cellContent.toString());
-                debugPrint(isCellContentNumeric.toString());
+                // dynamic cellContent = row
+                //     .toMap()
+                //     .entries
+                //     .firstWhere((element) => element.key == column.columnName)
+                //     .value
+                //     .toString();
+                // bool isCellContentNumeric = isNumeric(cellContent);
+                // debugPrint(cellContent.toString());
+                // debugPrint(isCellContentNumeric.toString());
                 return TableViewCell(
-
-                  alignment: isCellContentNumeric ? Alignment.centerRight : Alignment.centerLeft,
-                  child: Text(cellContent,style: const TextStyle(fontSize: 14)),
+                  // alignment: isCellContentNumeric
+                  //     ? Alignment.centerRight
+                  //     : Alignment.centerLeft,
+                  child:
+                      //Text(cellContent, style: const TextStyle(fontSize: 14)),
+                      const Text("AA", style: const TextStyle(fontSize: 14)),
                 );
               }).toList(),
             );
           }).toList(),
         ),
-      ),
-    );
-  }
-
-  Widget _buildDataTable(BuildContext context) {
-    final bloc = BlocProvider.of<DailyReportDetailBloc>(context);
-    late ReportDatum currentSection;
-
-    if (bloc.currentReportSection != null) {
-      currentSection = bloc.currentReportSection!;
-    }
-
-    List<dynamic> figures = currentSection.figures;
-    List<ColumnInfo> columns = currentSection.columnInfo;
-
-    Set<DataColumn> dataColumns = {};
-    List<DataRow> dataRows = List.empty(growable: true);
-
-    for (int i = 0; i < currentSection.columnInfo.length; i++) {
-      // debugPrint("${currentSection.columnInfo[i].columnName}, isOptional :${currentSection.columnInfo[i].isOptional}");
-      // if (!currentSection.columnInfo[i].isOptional) {
-      dataColumns.add(DataColumn(
-          label: Text(currentSection.columnInfo[i].columnName,
-              style: const TextStyle(fontWeight: FontWeight.bold))));
-      // }
-    }
-
-    for (int i = 0; i < figures.length; i++) {
-      Map<String, dynamic> figure = figures[i].toMap();
-      List<DataCell> cells = List.empty(growable: true);
-      for (int j = 0; j < columns.length; j++) {
-        String k = figure.keys
-            .firstWhere((element) => element == columns[j].columnName);
-        figure.forEach((key, value) {
-          if (key == k) cells.add(DataCell(Text("$value")));
-        });
-      }
-      dataRows.add(DataRow(cells: cells));
-    }
-
-    return SizedBox(
-      width: double.infinity,
-      child: DataTable(
-        showCheckboxColumn: false,
-        rows: dataRows,
-        columns: dataColumns.toList(),
       ),
     );
   }
